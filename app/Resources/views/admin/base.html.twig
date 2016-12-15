@@ -12,18 +12,14 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>{{ page_title }}</h3>
-                        </div>
-
-                        <div class="title_right">
-                            <div class="form-group pull-right">
-                                {% block search_content %}{% endblock %}
-                            </div>
+                            <h3>{% if page_title is defined %}{{ page_title }}{% endif %}</h3>
                         </div>
                     </div>
 
                     <div class="clearfix"></div>
-
+                    {% block message %}
+                        {% include 'AdminMainBundle::flash.html.twig' with { 'close': true } %}
+                    {% endblock %}
                     {% block page_content %}{% endblock %}
 
                 </div>
@@ -43,7 +39,7 @@
     <link href="{{ asset('assets/vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
     <!-- FastClick -->
     <script src="{{ asset('assets/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->

@@ -1,0 +1,29 @@
+image: tetraweb/php:5.6-cli
+
+before_script:
+  - docker-php-ext-enable intl
+  - docker-php-ext-enable mbstring
+  - docker-php-ext-enable zip
+  - docker-php-ext-enable pdo_mysql
+  - composer self-update
+  - composer update --prefer-dist > /dev/null
+
+services:
+  - mysql
+
+variables:
+  MYSQL_DATABASE: "symfony"
+
+after_failure:
+  script:
+    - cat var/logs/test.log
+  when: on_failure
+
+php-5.6:
+  image: tetraweb/php:5.6-cli
+  script:
+    - php app/console doctrine:database:create --no-interaction --if-not-exists
+    - php app/console doctrine:migrations:migrate --no-interaction
+    - vendor/bin/phpcs --config-set installed_paths vendor/endouble/symfony3-custom-coding-standard
+    - vendor/bin/phpcs --standard=Symfony3Custom
+    - vendor/bin/phpunit --colors --coverage-text -c app

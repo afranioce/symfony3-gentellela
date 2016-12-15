@@ -1,0 +1,76 @@
+menu:
+    menu: Menu
+    dashboard: Painel
+    config: Configurações
+default:
+    empty_value: Selecione
+page:
+    title:
+        new: Novo %entity%
+        edit: Editar %entity%
+        list: Lista de %entity%
+        report: Relatório de %entity%
+        import: Importação de %entity%
+form:
+    actions:
+        new: Novo
+        show: Ver
+        edit: Editar
+        delete: Apagar
+        close: Fechar
+        create: Criar novo
+        action: Ações
+        actions: Ações
+        back: Ir para listagem
+
+profile:
+    edit:
+        title: Editar Perfil
+    logout: Sair
+    account_settings: Configurações da conta
+result:
+    empty: Não há conteúdo cadastrado.
+    total: Mostrando %start% / %end% de %total%
+message:
+    success:
+        new: O conteúdo foi criado com sucesso.
+        delete: O conteúdo foi removido com sucesso.
+        edit: O conteúdo foi atualizado com sucesso.
+        import: O conteúdo foi importado com sucesso.
+        bad_param: Parametro inválido para pesquisa
+
+entity:
+    internalequipament: Equipamento Interno
+Previous: Anterior
+Next: Próximo
+Create: Criar
+Update: Atualizar
+Delete: Excluir
+Remove: Remover
+Messages: Mensagens
+Yes: Sim
+No: Não
+select: - Selecione -
+Filter: Filtrar
+Filters: Filtros
+Search by: Pesquisar por...
+Reset: Limpar
+Generate: Gerar
+Report: Relatório
+Forbidden: Acesso negado
+Not Found: Não encontrado
+Internal Server Error: Erro Interno no Servidor
+Parent: Parente
+Expires: Expira
+Category: Categoria
+File: Arquivo
+Import: Importar
+Any: Qualquer
+Permissions: Permissões
+Created: Criado
+Changed: Atualizado
+Status: Situação
+status: situação
+Name: Nome
+name: nome
+Go!: Ir!

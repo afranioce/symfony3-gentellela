@@ -1,4 +1,17 @@
 services:
-#    admin_main.example:
-#        class: Admin\MainBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    admin_main.menu_builder:
+        class: Admin\MainBundle\Menu\MainMenuBuilder
+        arguments: ["@knp_menu.factory"]
+        calls:
+            - [ setContainer, [ "@service_container" ] ]
+
+    admin_main.main_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@admin_main.menu_builder", buildMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: main }
+
+    admin_main.flash:
+        class: Admin\MainBundle\Session\FlashMessage
+        arguments: ["@session"]

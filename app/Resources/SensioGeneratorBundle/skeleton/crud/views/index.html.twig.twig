@@ -7,68 +7,68 @@
 {{ "{% block title %}{{ page_title }}{% endblock %}" }}
 
 {% block body %}
-{{ "{% block search_content %}" }}
-<form method="get" class="form-inline">
-    <div class="form-group">
-        <select name="criteria" class="form-control" required="required" title="" data-select="select2" data-allow-clear="true">
-
-        {%- for field, metadata in fields %}
-            {%- if loop.first and ('id' == field) %}
-
-            <option value="">{{ '{{ "select"|trans }}' }}</option>
-
-            {%- else %}
-
-            <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
-
-            {%- endif %}
-        {%- endfor %}
-
-        </select>
-    </div>
-    <div class="form-group">
-        <select name="operator" class="form-control" required="required" title="" data-select="select2">
-            <option value="eq" {{ '{% if app.request.get("operator") == "eq" %} selected="selected" {% endif %}' }}>Igual a</option>
-            <option value="neq" {{ '{% if app.request.get("operator") == "neq" %} selected="selected" {% endif %}' }}>Diferente</option>
-            <option value="lt" {{ '{% if app.request.get("operator") == "lt" %} selected="selected" {% endif %}' }}>Menor que</option>
-            <option value="gt" {{ '{% if app.request.get("operator") == "gt" %} selected="selected" {% endif %}' }}>Maior que</option>
-            <option value="lte" {{ '{% if app.request.get("operator") == "lte" %} selected="selected" {% endif %}' }}>Menor ou igual a</option>
-            <option value="gte" {{ '{% if app.request.get("operator") == "gte" %} selected="selected" {% endif %}' }}>Maior ou igual a</option>
-            <option value="like" {{ '{% if app.request.get("operator") == "like" %} selected="selected" {% endif %}' }}>Cont&eacute;m</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <input name="value" class="form-control" value="{{ '{{ app.request.get("value") }}' }}" placeholder="{{ '{{ "Search by"|trans }}' }}" required="required"/>
-    </div>
-    <div class="btn-group">
-        <button type="submit" class="btn btn-secondary">{{ '{{ "Go!"|trans }}' }}</button>
-        <button type="button" aria-expanded="false" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <li class="dropdown-menu">
-            <li><a href="{{ '{{ path(app.request.attributes.get("_route")) }}' }}" class="dropdown-item">{{ '{{ "Reset"|trans }}' }}</a>
-            </li>
-        </li>
-    </div>
-</form>
-{{ "{% endblock %}" }}
 
 {{ "{% block page_content %}" }}
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    {% if 'new' in actions %}
+                    {% if 'new' in actions -%}
                     <nav class="panel-menu admin-form theme-primary">
                         <div class="row">
+                            <div class="form-group pull-left">
+                                <form method="get" class="form-inline">
+                                    <div class="form-group">
+                                        <select name="criteria" class="form-control" required="required" title="" data-select="select2" data-allow-clear="true">
+
+                                            {%- for field, metadata in fields %}
+                                                {%- if loop.first and ('id' == field) %}
+
+                                                    <option value="">{{ '{{ "select"|trans }}' }}</option>
+
+                                                {%- else %}
+
+                                                    <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
+
+                                                {%- endif %}
+                                            {%- endfor %}
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="operator" class="form-control" required="required" title="" data-select="select2">
+                                            <option value="eq" {{ '{% if app.request.get("operator") == "eq" %} selected="selected" {% endif %}' }}>Igual a</option>
+                                            <option value="neq" {{ '{% if app.request.get("operator") == "neq" %} selected="selected" {% endif %}' }}>Diferente</option>
+                                            <option value="lt" {{ '{% if app.request.get("operator") == "lt" %} selected="selected" {% endif %}' }}>Menor que</option>
+                                            <option value="gt" {{ '{% if app.request.get("operator") == "gt" %} selected="selected" {% endif %}' }}>Maior que</option>
+                                            <option value="lte" {{ '{% if app.request.get("operator") == "lte" %} selected="selected" {% endif %}' }}>Menor ou igual a</option>
+                                            <option value="gte" {{ '{% if app.request.get("operator") == "gte" %} selected="selected" {% endif %}' }}>Maior ou igual a</option>
+                                            <option value="like" {{ '{% if app.request.get("operator") == "like" %} selected="selected" {% endif %}' }}>Cont&eacute;m</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="value" class="form-control" value="{{ '{{ app.request.get("value") }}' }}" placeholder="{{ '{{ "Search by"|trans }}' }}" required="required"/>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-secondary">{{ '{{ "Go!"|trans }}' }}</button>
+                                        <button type="button" aria-expanded="false" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ '{{ path(app.request.attributes.get("_route")) }}' }}">{{ '{{ "Reset"|trans }}' }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="pull-right col-md-4">
                                 <a class="pull-right btn btn-default" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}"
                                    title="{{ "{{ 'form.actions.create'|trans }}" }}">{{ "{{ 'form.actions.create'|trans }}" }}</a>
                             </div>
                         </div>
                     </nav>
-                    {% endif %}
+                    {% endif -%}
                     <!-- //form content -->
 
                     {{ "{% if " ~ entity_pluralized ~ ".items is empty %}" }}
@@ -91,7 +91,7 @@
 
                                     <th>
                                         {{ "{{ knp_pagination_sortable(" ~ entity_pluralized ~ ", '#', '" ~ entity[:1]|lower ~ ".id') }}" }}
-                                        <span class="fa fa-fw fa-sort-{{ '{{ ' ~ entity_pluralized ~ '.getDirection() }}' }} "></span>
+                                        <span class="fa fa-fw fa-sort-{{ '{{ ' ~ entity_pluralized ~ '.direction }}' }} "></span>
                                     </th>
 
                                     {%- else %}
