@@ -1,0 +1,13 @@
+homepage:
+    resource: "@AppBundle/Controller"
+    type:     annotation
+    prefix:   /
+
+admin_main:
+    resource: "@AdminMainBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    prefix:   /usuario

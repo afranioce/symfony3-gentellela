@@ -1,0 +1,12 @@
+
+                                            <div>
+
+                                            {%- for action in record_actions %}
+                                            {%- if(action != 'show') %}
+
+                                                <a class="btn btn-primary btn-sm" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}"><i class="fa fa-{{ action }}"></i> {{ "{{ 'form.actions." ~ action ~ "'|trans }}" }}</a>
+
+                                            {%- endif %}
+                                            {%- endfor %}
+
+                                            </div>

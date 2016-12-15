@@ -1,0 +1,189 @@
+{% block extends %}
+{{ "{% extends 'admin/base.html.twig' %}" }}
+{% endblock extends %}
+
+{{ "{% set page_title = 'page.title.list'|trans({'%entity%': 'entity." ~ entity|lower ~ "'|trans}) %}" }}
+
+{{ "{% block title %}{{ page_title }}{% endblock %}" }}
+
+{% block body %}
+{{ "{% block search_content %}" }}
+<form method="get" class="form-inline">
+    <div class="form-group">
+        <select name="criteria" class="form-control" required="required" title="" data-select="select2" data-allow-clear="true">
+
+        {%- for field, metadata in fields %}
+            {%- if loop.first and ('id' == field) %}
+
+            <option value="">{{ '{{ "select"|trans }}' }}</option>
+
+            {%- else %}
+
+            <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
+
+            {%- endif %}
+        {%- endfor %}
+
+        </select>
+    </div>
+    <div class="form-group">
+        <select name="operator" class="form-control" required="required" title="" data-select="select2">
+            <option value="eq" {{ '{% if app.request.get("operator") == "eq" %} selected="selected" {% endif %}' }}>Igual a</option>
+            <option value="neq" {{ '{% if app.request.get("operator") == "neq" %} selected="selected" {% endif %}' }}>Diferente</option>
+            <option value="lt" {{ '{% if app.request.get("operator") == "lt" %} selected="selected" {% endif %}' }}>Menor que</option>
+            <option value="gt" {{ '{% if app.request.get("operator") == "gt" %} selected="selected" {% endif %}' }}>Maior que</option>
+            <option value="lte" {{ '{% if app.request.get("operator") == "lte" %} selected="selected" {% endif %}' }}>Menor ou igual a</option>
+            <option value="gte" {{ '{% if app.request.get("operator") == "gte" %} selected="selected" {% endif %}' }}>Maior ou igual a</option>
+            <option value="like" {{ '{% if app.request.get("operator") == "like" %} selected="selected" {% endif %}' }}>Cont&eacute;m</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input name="value" class="form-control" value="{{ '{{ app.request.get("value") }}' }}" placeholder="{{ '{{ "Search by"|trans }}' }}" required="required"/>
+    </div>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-secondary">{{ '{{ "Go!"|trans }}' }}</button>
+        <button type="button" aria-expanded="false" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <li class="dropdown-menu">
+            <li><a href="{{ '{{ path(app.request.attributes.get("_route")) }}' }}" class="dropdown-item">{{ '{{ "Reset"|trans }}' }}</a>
+            </li>
+        </li>
+    </div>
+</form>
+{{ "{% endblock %}" }}
+
+{{ "{% block page_content %}" }}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    {% if 'new' in actions %}
+                    <nav class="panel-menu admin-form theme-primary">
+                        <div class="row">
+                            <div class="pull-right col-md-4">
+                                <a class="pull-right btn btn-default" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}"
+                                   title="{{ "{{ 'form.actions.create'|trans }}" }}">{{ "{{ 'form.actions.create'|trans }}" }}</a>
+                            </div>
+                        </div>
+                    </nav>
+                    {% endif %}
+                    <!-- //form content -->
+
+                    {{ "{% if " ~ entity_pluralized ~ ".items is empty %}" }}
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td colspan="10">
+                                    {{ "{{ 'result.empty'|trans }} <a href=\"{{ path('" ~ route_name_prefix ~ "_new') }}\">{{ 'form.actions.create'|trans }}</a>." }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {{ "{% else %}" }}
+                        <table class="table table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                {%- for field, metadata in fields %}
+
+                                    {%- if loop.first and ('id' == field) %}
+
+                                    <th>
+                                        {{ "{{ knp_pagination_sortable(" ~ entity_pluralized ~ ", '#', '" ~ entity[:1]|lower ~ ".id') }}" }}
+                                        <span class="fa fa-fw fa-sort-{{ '{{ ' ~ entity_pluralized ~ '.getDirection() }}' }} "></span>
+                                    </th>
+
+                                    {%- else %}
+
+                                    <th>{{ field|capitalize }}</th>
+
+                                    {%- endif %}
+
+                                {%- endfor %}
+
+                                    <th>{{ "{{ 'form.actions.action'|trans }}" }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+                                    <tr>
+
+                                    {%- for field, metadata in fields %}
+                                        {%- if loop.first and ('show' in actions) %}
+
+                                        <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+
+                                        {%- elseif metadata.type in ['datetime'] %}
+
+                                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m/Y H:i:s\') }}{% endif %}' }}</td>
+
+                                        {%- elseif metadata.type in ['date'] %}
+
+                                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m/Y\') }}{% endif %}' }}</td>
+
+                                        {%- elseif metadata.type in ['time'] %}
+
+                                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+                                        {%- elseif metadata.type in ['array'] %}
+
+                                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+                                        {%- elseif metadata.type in ['boolean'] %}
+
+                                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+                                        {%- else %}
+
+                                        <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+                                        {%- endif %}
+
+                                        {%- if loop.last %}
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" aria-expanded="false" data-toggle="dropdown" class="btn btn-sm btn-secondary dropdown-toggle">{{ '{{ "form.actions.actions"|trans }}' }}
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    {%- for action in record_actions %}
+
+                                                        <li>
+                                                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ "{{ 'form.actions." ~ action ~ "'|trans }}" }}</a>
+                                                        </li>
+
+                                                    {%- endfor %}
+                                                </ul>
+                                            </div>
+                                        </td>
+
+                                        {%- endif %}
+                                    {%- endfor %}
+
+                                    </tr>
+                                {{ '{% endfor %}' }}
+                            </tbody>
+                        </table>
+                        {# display navigation #}
+
+                        <div class="dt-panelfooter clearfix">
+                            <div class="pull-left" role="status">
+                                {{ "{{ 'result.total'|trans({'%start%': " ~ entity_pluralized ~ ".paginationData.firstItemNumber, '%end%': " ~ entity_pluralized ~ ".paginationData.lastItemNumber, '%total%': " ~ entity_pluralized ~ ".totalItemCount, })|raw }}" }}
+                            </div>
+                            <div class="pull-right">
+                                {{ '{{ knp_pagination_render(' ~ entity_pluralized ~ ') }}' }}
+                            </div>
+                        </div>
+                    {{ "{%- endif %}" }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+{{ "{% endblock %}" }}
+{% endblock body %}

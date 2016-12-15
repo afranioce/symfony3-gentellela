@@ -1,0 +1,52 @@
+    /**
+{% block phpdoc_method_header %}
+     * Lists all {{ entity_singularized }} entities.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}_index")
+     * @Method("GET")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function indexAction()
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $em = $this->getDoctrine()->getManager();
+
+        $criteria = $request->get('criteria');
+        $value = $request->get('value');
+
+        $qb = $em->createQueryBuilder()
+            ->select('{{ entity[:1]|lower }}')
+            ->from('{{ bundle }}:{{ entity }}', '{{ entity[:1]|lower }}');
+
+        if (!empty($criteria) && !empty($value)) {
+            $operator = $request->get('operator');
+
+            $type = $em->getClassMetadata('{{ bundle }}:{{ entity }}')->getTypeOfField($criteria);
+            if ($type == 'date' || $type == 'datetime') {
+                $value = \DateTime::createFromFormat('d/m/Y H:i:s', $value);
+            }
+
+            $qb->andWhere($qb->expr()->{$operator}('{{ entity[:1]|lower }}.' . $criteria, '?0'));
+            $qb->setParameter(0, $value);
+        }
+
+        $paginator  = $this->get('knp_paginator');
+        ${{ entity_pluralized }} = $paginator->paginate(
+            $qb->getQuery(),
+            $request->get('page', 1)/*page number*/,
+            $request->get('limit', 50)/*limit per page*/
+        );
+{% endblock method_body %}
+
+{% block method_return %}
+        return $this->render('{{ entity|lower|replace({'\\': '/'}) }}/index.html.twig', array(
+            '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+        ));
+{% endblock method_return %}
+    }

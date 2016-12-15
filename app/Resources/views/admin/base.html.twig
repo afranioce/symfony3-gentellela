@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container body">
+        <div class="main_container">
+
+            {% include 'admin/sidebar.html.twig' %}
+            {% include 'admin/topnav.html.twig' %}
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>{{ page_title }}</h3>
+                        </div>
+
+                        <div class="title_right">
+                            <div class="form-group pull-right">
+                                {% block search_content %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    {% block page_content %}{% endblock %}
+
+                </div>
+            </div>
+            <!-- /page content -->
+
+            {% include 'admin/footer.html.twig' %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <!-- Switchery -->
+    <link href="{{ asset('assets/vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="{{ asset('assets/vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+    <!-- FastClick -->
+    <script src="{{ asset('assets/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('assets/vendors/nprogress/nprogress.js') }}"></script>
+    <!-- Switchery -->
+    <script src="{{ asset('assets/vendors/switchery/dist/switchery.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('assets/vendors/select2/dist/js/select2.full.min.js') }}"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="{{ asset('assets/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
+    <script src="{{ asset('assets/vendors/google-code-prettify/src/prettify.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+{% endblock %}
