@@ -67,7 +67,7 @@ class User extends BaseUser
     {
         $realname = $this->username;
 
-        if($this->profile !== null && $this->profile->getName() !== '') {
+        if ($this->profile !== null && $this->profile->getName() !== '') {
             $realname = $this->profile->getName();
         }
 

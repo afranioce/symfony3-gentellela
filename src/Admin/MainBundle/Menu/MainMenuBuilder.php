@@ -21,6 +21,7 @@ class MainMenuBuilder implements ContainerAwareInterface
      */
     private $container;
 
+
     /**
      * @param FactoryInterface $factory
      */
@@ -69,7 +70,6 @@ class MainMenuBuilder implements ContainerAwareInterface
         $alreadyTaken = array();
 
         foreach ($menu->getChildren() as $key => $menuItem) {
-
             if ($menuItem->hasChildren()) {
                 $this->reorderMenuItems($menuItem);
             }
@@ -103,7 +103,11 @@ class MainMenuBuilder implements ContainerAwareInterface
                     continue;
                 }
 
-                $menuOrderArray = array_merge(array_slice($menuOrderArray, 0, $position), array($value), array_slice($menuOrderArray, $position));
+                $menuOrderArray = array_merge(
+                    array_slice($menuOrderArray, 0, $position),
+                    array($value),
+                    array_slice($menuOrderArray, $position)
+                );
             }
         }
 
@@ -121,5 +125,4 @@ class MainMenuBuilder implements ContainerAwareInterface
             $menu->reorderChildren($menuOrderArray);
         }
     }
-
 }

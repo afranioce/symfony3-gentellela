@@ -18,5 +18,4 @@ final class MenuEvents
      * @var string
      */
     const CONFIGURE_USER = 'admin_main.menu.configure_user';
-
 }
