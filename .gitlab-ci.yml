@@ -1,4 +1,4 @@
-image: tetraweb/php:5.6-cli
+image: tetraweb/php
 
 before_script:
   - docker-php-ext-enable intl
@@ -20,7 +20,7 @@ after_failure:
   when: on_failure
 
 php-5.6:
-  image: tetraweb/php:5.6-cli
+  image: tetraweb/php
   script:
     - php bin/console doctrine:database:create --no-interaction --if-not-exists
     - php bin/console doctrine:migrations:migrate --no-interaction
