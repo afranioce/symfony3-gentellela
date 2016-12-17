@@ -1,12 +1,17 @@
 image: tetraweb/php
 
+cache:
+  paths:
+  - vendor/
+
 before_script:
   - docker-php-ext-enable intl
   - docker-php-ext-enable mbstring
   - docker-php-ext-enable zip
   - docker-php-ext-enable pdo_mysql
-  - composer self-update
-  - composer update
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar clear-cache
+  - php composer.phar install
 
 services:
   - mysql
