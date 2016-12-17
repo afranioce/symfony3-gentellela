@@ -6,7 +6,7 @@ before_script:
   - docker-php-ext-enable zip
   - docker-php-ext-enable pdo_mysql
   - composer self-update
-  - composer update --no-plugins --no-scripts --prefer-dist > /dev/null
+  - composer update
 
 services:
   - mysql
