@@ -2,6 +2,8 @@
 
 {% set body_classes = 'error-page' %}
 
+{% block title %}{{ status_text|trans }}{% endblock %}
+
 {% block body %}
     <div class="container body">
         <div class="main_container">
@@ -10,20 +12,17 @@
                 <div class="col-middle">
                     <div class="text-center">
                         <h1 class="error-number">{{ status_code }}!</h1>
-                        <h2>Oops! {{ status_code }} {{ status_text|trans }}.</h2>
-                        <p>
-                            Vamos corrigi-lo o mais rapidamente possível. Desculpe por qualquer inconveniente causado.
-                            <a href="{{ path('homepage') }}">retornar para a página inicial</a>.
-                        </p>
+                        <h2>{{ 'error.ops'|trans({'%code%': status_code, '%text%': status_text|trans}) }}</h2>
+                        <p>{{ 'error.message'|trans({'%url%': path('admin_main_homepage')})|raw }}</p>
                         <div class="mid_center">
-                            <h3>Buscar</h3>
+                            <h3>{{ 'Search'|trans }}</h3>
                             <form>
                                 <div class="col-xs-12 form-group pull-right top_search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Buscar por...">
+                                        <input type="text" class="form-control" placeholder="{{ 'Search by...'|trans }}">
                                         <span class="input-group-btn">
-                                  <button class="btn btn-default" type="button">Ok!</button>
-                              </span>
+                                            <button class="btn btn-default" type="button">{{ 'Go!'|trans }}</button>
+                                        </span>
                                     </div>
                                 </div>
                             </form>

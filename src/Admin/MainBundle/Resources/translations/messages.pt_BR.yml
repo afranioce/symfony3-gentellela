@@ -51,7 +51,7 @@ No: Não
 select: - Selecione -
 Filter: Filtrar
 Filters: Filtros
-Search by: Pesquisar por...
+Search by...: Pesquisar por...
 Reset: Limpar
 Generate: Gerar
 Report: Relatório
@@ -71,4 +71,8 @@ Status: Situação
 status: situação
 Name: Nome
 name: nome
-Go!: Ir!
+Go!: Ok!
+Search: Buscar
+error:
+    ops: Oops! %code% %text%
+    message: Vamos corrigi-lo o mais rapidamente possível. Desculpe por qualquer inconveniência causada.<br/><a href="%url%">Retornar para a página inicial</a>.

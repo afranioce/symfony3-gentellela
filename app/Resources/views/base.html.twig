@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="{{ _charset }}" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %} | {{ site_prefix ~ ' ' ~ site_name }}{% if site_slogan %} - {{ site_slogan }}{% endif %}</title>
@@ -16,11 +16,9 @@
         <link href="{{ asset('assets/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
         <!-- Select2 -->
         <link href="{{ asset('assets/vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-
-        {% block stylesheets %}{% endblock %}
-
         <!-- Custom Theme Style -->
         <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+        {% block stylesheets %}{% endblock %}
     </head>
     <body class="nav-md{% if body_classes is defined %} {{ body_classes }}{% endif %}">
         {% block body %}{% endblock %}
@@ -29,10 +27,9 @@
         <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
         <!-- Bootstrap -->
         <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-        {% block javascripts %}{% endblock %}
-
         <!-- Custom Theme Scripts -->
         <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
