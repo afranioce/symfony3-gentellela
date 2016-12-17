@@ -38,7 +38,8 @@
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "friendsofphp/php-cs-fixer": "^1.11",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "scripts": {
         "symfony-scripts": [
