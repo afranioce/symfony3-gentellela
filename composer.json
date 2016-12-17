@@ -38,7 +38,8 @@
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "friendsofphp/php-cs-fixer": "^1.11",
-        "endouble/symfony3-custom-coding-standard": "^2.16"
+        "endouble/symfony3-custom-coding-standard": "^2.16",
+        "phpunit/phpunit": "^4.8"
     },
     "scripts": {
         "symfony-scripts": [

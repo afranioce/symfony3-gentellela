@@ -24,13 +24,6 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="matriculation", type="string", length=30, nullable=true)
-     */
-    private $matriculation;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
     private $name;
@@ -50,30 +43,6 @@ class Profile
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set matriculation
-     *
-     * @param string $matriculation
-     *
-     * @return Profile
-     */
-    public function setMatriculation($matriculation)
-    {
-        $this->matriculation = $matriculation;
-
-        return $this;
-    }
-
-    /**
-     * Get matriculation
-     *
-     * @return string
-     */
-    public function getMatriculation()
-    {
-        return $this->matriculation;
     }
 
     /**

@@ -39,8 +39,6 @@ message:
         import: O conteúdo foi importado com sucesso.
         bad_param: Parametro inválido para pesquisa
 
-entity:
-    internalequipament: Equipamento Interno
 Previous: Anterior
 Next: Próximo
 Create: Criar
