@@ -34,9 +34,8 @@ class Profile
      */
     private $user;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -46,7 +45,7 @@ class Profile
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -60,7 +59,7 @@ class Profile
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -70,9 +69,10 @@ class Profile
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \Admin\UserBundle\Entity\User $user
+     *
      * @return Profile
      */
     public function setUser(\Admin\UserBundle\Entity\User $user = null)
@@ -83,7 +83,7 @@ class Profile
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \Admin\UserBundle\Entity\User
      */

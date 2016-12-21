@@ -23,10 +23,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Admin\UserBundle\Entity\Profile", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="Admin\UserBundle\Entity\Profile", mappedBy="user", cascade={"persist"})
      */
     private $profile;
-
 
     public function __construct()
     {
@@ -35,9 +34,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set profile
+     * Set profile.
      *
      * @param \Admin\UserBundle\Entity\Profile $profile
+     *
      * @return User
      */
     public function setProfile(\Admin\UserBundle\Entity\Profile $profile = null)
@@ -49,7 +49,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get profile
+     * Get profile.
      *
      * @return \Admin\UserBundle\Entity\Profile
      */
@@ -59,15 +59,15 @@ class User extends BaseUser
     }
 
     /**
-     * Get realname
+     * Get realname.
      *
      * @return string
      */
     public function getRealname()
     {
-        $realname = $this->username;
+        $realname = $this->getUsername();
 
-        if ($this->profile !== null && $this->profile->getName() !== '') {
+        if ($this->profile instanceof \Admin\UserBundle\Entity\Profile && $this->profile->getName() !== '') {
             $realname = $this->profile->getName();
         }
 

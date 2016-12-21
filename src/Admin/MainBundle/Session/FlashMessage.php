@@ -10,13 +10,12 @@ namespace Admin\MainBundle\Session;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * FlashMessage
+ * FlashMessage.
  *
- * @package    BraincraftedBootstrapBundle
- * @subpackage Session
  * @author     Florian Eckerstorfer <florian@eckerstorfer.co>
  * @copyright  2012-2013 Florian Eckerstorfer
  * @license    http://opensource.org/licenses/MIT The MIT License
+ *
  * @link       http://bootstrap.braincrafted.com Bootstrap for Symfony2
  */
 class FlashMessage
@@ -43,7 +42,7 @@ class FlashMessage
     {
         $this->session->getFlashBag()->add('alert', $message);
     }
-    
+
     /**
      * Alias for `danger()`.
      *

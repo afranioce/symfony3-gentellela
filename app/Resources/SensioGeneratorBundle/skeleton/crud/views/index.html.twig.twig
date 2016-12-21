@@ -19,24 +19,18 @@
                             <div class="form-group pull-left">
                                 <form method="get" class="form-inline">
                                     <div class="form-group">
-                                        <select name="criteria" class="form-control" required="required" title="" data-select="select2" data-allow-clear="true">
-
-                                            {%- for field, metadata in fields %}
-                                                {%- if loop.first and ('id' == field) %}
-
-                                                    <option value="">{{ '{{ "select"|trans }}' }}</option>
-
-                                                {%- else %}
-
-                                                    <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
-
-                                                {%- endif %}
-                                            {%- endfor %}
-
+                                        <select name="criteria" class="form-control" required="required" title="" data-select="select2" data-placeholder="{{ '{{ \'default.empty_value\'|trans }}' }}" data-allow-clear="true">
+                                        {% for field, metadata in fields -%}
+                                            {%- if loop.first and ('id' == field) -%}
+                                                <option value="">{{ '{{ "default.empty_value"|trans }}' }}</option>
+                                            {%- else -%}
+                                                <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
+                                            {% endif -%}
+                                        {%- endfor -%}
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <select name="operator" class="form-control" required="required" title="" data-select="select2">
+                                        <select name="operator" class="form-control" required="required" title="" data-select="select2" data-placeholder="{{ '{{ \'default.empty_value\'|trans }}' }}">
                                             <option value="eq" {{ '{% if app.request.get("operator") == "eq" %} selected="selected" {% endif %}' }}>Igual a</option>
                                             <option value="neq" {{ '{% if app.request.get("operator") == "neq" %} selected="selected" {% endif %}' }}>Diferente</option>
                                             <option value="lt" {{ '{% if app.request.get("operator") == "lt" %} selected="selected" {% endif %}' }}>Menor que</option>

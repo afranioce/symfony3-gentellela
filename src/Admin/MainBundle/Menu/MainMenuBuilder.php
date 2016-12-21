@@ -5,6 +5,7 @@ namespace Admin\MainBundle\Menu;
 use Admin\MainBundle\Event\ConfigureMenuEvent;
 use Admin\MainBundle\MenuEvents;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -21,7 +22,6 @@ class MainMenuBuilder implements ContainerAwareInterface
      */
     private $container;
 
-
     /**
      * @param FactoryInterface $factory
      */
@@ -37,19 +37,21 @@ class MainMenuBuilder implements ContainerAwareInterface
 
     /**
      * @param RequestStack $requestStack
+     *
      * @return \Knp\Menu\ItemInterface
      */
     public function buildMenu(RequestStack $requestStack)
     {
-        $menu = $this->factory->createItem('root', array('route' => 'admin_main_homepage'));
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array('class' => 'nav side-menu'));
+
+        $menu->addChild($this->factory->createItem('menu.dashboard', array('route' => 'admin_main_homepage')))
+            ->setAttributes(array('icon' => 'fa fa-home'));
 
         $this->container->get('event_dispatcher')->dispatch(
             MenuEvents::CONFIGURE_MAIN,
             new ConfigureMenuEvent($this->factory, $menu)
         );
-
-        $menu->addChild($this->factory->createItem('menu.config'));
 
         $this->container->get('event_dispatcher')->dispatch(
             MenuEvents::CONFIGURE_SETTINGS,
@@ -124,5 +126,83 @@ class MainMenuBuilder implements ContainerAwareInterface
         if (count($menuOrderArray)) {
             $menu->reorderChildren($menuOrderArray);
         }
+    }
+
+    /**
+     * @param Bundle Controller $class
+     *
+     * @return \JMS\SecurityExtraBundle\Metadata\ClassMetadata
+     */
+    public function getMetadata($controllerClass)
+    {
+        return $this->metadataReader->loadMetadataForClass(new \ReflectionClass($controllerClass));
+    }
+
+    /**
+     * @param $routeName
+     *
+     * @return bool from AuthorizationCheckerInterface
+     */
+    public function hasRouteAccess($routeName)
+    {
+        $token = $this->tokenStorage->getToken();
+        if ($token->isAuthenticated()) {
+            //Logout is assigned in services so it does not have a default(_controller)
+            //$fullyQualifiedClassNameAndMethod
+            if ($routeName != 'user_auth_logout') {
+                $route = $this->router->getRouteCollection()->get($routeName);
+                $fullyQualifiedClassNameAndMethod = $route->getDefault('_controller');
+                list($routeClass, $routeMethod) = explode('::', $fullyQualifiedClassNameAndMethod, 2);
+
+                $metadata = $this->getMetadata($routeClass);
+
+                if (!isset($metadata->methodMetadata[$routeMethod])) {
+                    return false;
+                }
+
+                foreach ($metadata->methodMetadata[$routeMethod]->roles as $role) {
+                    if ($this->authorizationChecker->isGranted($role)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            } elseif (($routeName == 'user_auth_logout')
+                && ((true === $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY'))
+                    || (true === $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+                )
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $menu
+     *
+     * @return \Knp\Menu\ItemInterface $menu
+     */
+    public function filterMenuByRouteAuthorization(ItemInterface $menu)
+    {
+        /** @var \Knp\Menu\MenuItem $child */
+        foreach ($menu->getChildren() as $child) {
+            $routes = $child->getExtra('routes');
+
+            if ($routes !== null) {
+                $route = current(current($routes));
+
+                if ($route && !$this->hasRouteAccess($route)) {
+                    $menu->removeChild($child);
+                }
+            } elseif ($child->hasChildren()) {
+                $this->filterMenuByRouteAuthorization($child);
+            }
+        }
+
+        return $menu;
     }
 }

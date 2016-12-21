@@ -15,3 +15,8 @@ services:
     admin_main.flash:
         class: Admin\MainBundle\Session\FlashMessage
         arguments: ["@session"]
+
+    admin_main.menu.event_listener:
+        class: Admin\MainBundle\EventListener\ConfigureMenuListener
+        tags:
+            - { name: kernel.event_listener, event: admin_main.menu.configure_main, method: onMenuConfigureMain }
