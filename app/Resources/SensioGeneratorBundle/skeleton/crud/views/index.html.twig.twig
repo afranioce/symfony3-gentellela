@@ -24,7 +24,7 @@
                                             {%- if loop.first and ('id' == field) -%}
                                                 <option value="">{{ '{{ "default.empty_value"|trans }}' }}</option>
                                             {%- else -%}
-                                                <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field ~ '"|trans }}' }}</option>
+                                                <option value="{{ field }}" data-md-type="{{ metadata.type }}" {{ '{% if app.request.get("criteria") == "' ~ field ~ '" %} selected="selected" {% endif %}' }}>{{ '{{ "' ~ field|capitalize ~ '"|trans }}' }}</option>
                                             {% endif -%}
                                         {%- endfor -%}
                                         </select>
@@ -41,7 +41,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <input name="value" class="form-control" value="{{ '{{ app.request.get("value") }}' }}" placeholder="{{ '{{ "Search by"|trans }}' }}" required="required"/>
+                                        <input name="value" class="form-control" value="{{ '{{ app.request.get("value") }}' }}" placeholder="{{ '{{ "Search by..."|trans }}' }}" required="required"/>
                                     </div>
                                     <div class="btn-group">
                                         <button type="submit" class="btn btn-secondary">{{ '{{ "Go!"|trans }}' }}</button>
@@ -85,12 +85,12 @@
 
                                     <th>
                                         {{ "{{ knp_pagination_sortable(" ~ entity_pluralized ~ ", '#', '" ~ entity[:1]|lower ~ ".id') }}" }}
-                                        <span class="fa fa-fw fa-sort-{{ '{{ ' ~ entity_pluralized ~ '.direction }}' }} "></span>
+                                        <span class="fa fa-fw fa-sort{{ '{% if ' ~ entity_pluralized ~ '.direction %}-{{ ' ~ entity_pluralized ~ '.direction }}{% endif %}' }}"></span>
                                     </th>
 
                                     {%- else %}
 
-                                    <th>{{ field|capitalize }}</th>
+                                    <th>{{ '{{ ' ~ field|capitalize ~ '|trans }}' }}</th>
 
                                     {%- endif %}
 

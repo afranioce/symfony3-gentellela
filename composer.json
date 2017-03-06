@@ -1,5 +1,5 @@
 {
-    "name": "afranio/gentelella",
+    "name": "afranioce/gentelella",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -60,9 +60,6 @@
     "config": {
         "platform": {
             "php": "5.5.9"
-        },
-        "github-oauth": {
-            "github.com": "2f2a607569e17c5bb6cdeb4bd3f615d5ef7572ce"
         }
     },
     "extra": {

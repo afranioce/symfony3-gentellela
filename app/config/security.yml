@@ -40,7 +40,7 @@ security:
             anonymous: ~
 
     access_control:
-        - { path: ^/usuario/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/usuario/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/usuario/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

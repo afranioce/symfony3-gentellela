@@ -31,9 +31,13 @@
             if ($type == 'date' || $type == 'datetime') {
                 $value = \DateTime::createFromFormat('d/m/Y H:i:s', $value);
             }
-
-            $qb->andWhere($qb->expr()->{$operator}('{{ entity[:1]|lower }}.' . $criteria, '?0'));
-            $qb->setParameter(0, $value);
+            if ($operator === 'like') {
+                $value = $qb->expr()->literal('%' . $value . '%');
+                $qb->andWhere($qb->expr()->{$operator}('{{ entity[:1]|lower }}.'.$criteria, $value));
+            } else {
+                $qb->andWhere($qb->expr()->{$operator}('{{ entity[:1]|lower }}.'.$criteria, '?0'));
+                $qb->setParameter(0, $value);
+            }
         }
 
         $paginator  = $this->get('knp_paginator');

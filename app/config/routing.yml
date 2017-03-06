@@ -5,4 +5,4 @@ admin_main:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    prefix:   /usuario
+    prefix:   /user

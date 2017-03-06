@@ -11,6 +11,6 @@
 {%- endblock radio_widget -%}
 
 {%- block choice_widget_collapsed -%}
-    {% set attr = attr|merge({'data-select': 'select2'}) %}
+    {% set attr = attr|merge({'data-select': 'select2', 'data-placeholder': ''}) %}
     {{- parent() -}}
 {%- endblock choice_widget_collapsed -%}
