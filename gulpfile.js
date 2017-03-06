@@ -15,7 +15,8 @@ gulp.task('less', function () {
     return gulp.src([
         'web-src/less/*.less',
         GVENDOR + 'bootstrap/less/bootstrap.less',
-        GVENDOR + 'fontawesome/less/font-awesome.less'
+        GVENDOR + 'fontawesome/less/font-awesome.less',
+        'web-src/css/*.css'
     ])
         .pipe(less({compress: true}))
         .pipe(concat('style.css'))
