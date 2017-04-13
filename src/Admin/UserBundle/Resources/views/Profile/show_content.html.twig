@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+        <div class="profile_img">
+            <div id="crop-avatar">
+                <!-- Current avatar -->
+                <img class="img-responsive avatar-view" src="{{ asset('assets/images/picture.jpg') }}" alt="Avatar" title="Change the avatar">
+            </div>
+        </div>
+        <h3>{{ user.username }}</h3>
+
+        <ul class="list-unstyled user_data">
+            <li><i class="fa fa-envelope user-profile-icon"></i>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </li>
+        </ul>
+
+        <a href="{{ url('fos_user_profile_edit') }}" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i> {{ 'profile.edit.title'|trans({}) }}</a>
+        <br>
+
+    </div>
+</div>

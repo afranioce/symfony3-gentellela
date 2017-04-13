@@ -1,6 +1,9 @@
+{% trans_default_domain 'FOSUserBundle' %}
 {% extends 'base.html.twig' %}
 
 {% set body_classes = 'login' %}
+
+{% block title %}{{ 'layout.login'|trans }}{% endblock %}
 
 {% block body %}
     {% if app.request.hasPreviousSession %}

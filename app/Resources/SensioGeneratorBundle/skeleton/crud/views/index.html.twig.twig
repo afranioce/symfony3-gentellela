@@ -83,25 +83,26 @@
 
                                     {%- if loop.first and ('id' == field) %}
 
-                                    <th>
+                                    <th style="width: 8%">
                                         {{ "{{ knp_pagination_sortable(" ~ entity_pluralized ~ ", '#', '" ~ entity[:1]|lower ~ ".id') }}" }}
                                         <span class="fa fa-fw fa-sort{{ '{% if ' ~ entity_pluralized ~ '.direction %}-{{ ' ~ entity_pluralized ~ '.direction }}{% endif %}' }}"></span>
                                     </th>
 
                                     {%- else %}
 
-                                    <th>{{ '{{ ' ~ field|capitalize ~ '|trans }}' }}</th>
+                                    <th>{{ "{{ '" ~ field|capitalize ~ "'|trans }}" }}</th>
 
                                     {%- endif %}
 
                                 {%- endfor %}
 
-                                    <th>{{ "{{ 'form.actions.action'|trans }}" }}</th>
+                                    <th style="width: 20%;">{{ "{{ 'form.actions.action'|trans }}" }}</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+                                {{ '{% set delete_form = delete_forms[loop.index0] %}' }}
                                     <tr>
 
                                     {%- for field, metadata in fields %}
@@ -138,21 +139,20 @@
                                         {%- if loop.last %}
 
                                         <td>
-                                            <div class="btn-group">
-                                                <button type="button" aria-expanded="false" data-toggle="dropdown" class="btn btn-sm btn-secondary dropdown-toggle">{{ '{{ "form.actions.actions"|trans }}' }}
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
+                                            {{ "{{ form_start(delete_form) }}" }}
+
+                                            {%- for action in record_actions %}
+
+                                                <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="btn btn-{% if action == 'edit' %}info{% elseif action == 'show' %}primary{% endif %} btn-xs">
+                                                    <i class="fa fa-{% if action == 'edit' %}pencil{% elseif action == 'show' %}eye{% endif %}" aria-hidden="true"></i> {{ "{{ 'form.actions." ~ action ~ "'|trans }}" }}
+                                                </a>
+
+                                            {%- endfor %}
+
+                                                <button type="submit" class="btn btn-danger btn-xs">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i> {{ "{{ 'form.actions.delete'|trans }}" }}
                                                 </button>
-                                                <ul class="dropdown-menu">
-                                                    {%- for action in record_actions %}
-
-                                                        <li>
-                                                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ "{{ 'form.actions." ~ action ~ "'|trans }}" }}</a>
-                                                        </li>
-
-                                                    {%- endfor %}
-                                                </ul>
-                                            </div>
+                                            {{ '{{ form_end(delete_form) }}' }}
                                         </td>
 
                                         {%- endif %}

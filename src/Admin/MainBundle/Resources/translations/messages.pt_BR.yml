@@ -28,6 +28,7 @@ profile:
         title: Editar Perfil
     logout: Sair
     account_settings: Configurações da conta
+    name: Perfil
 result:
     empty: Não há conteúdo cadastrado.
     total: Mostrando %start% / %end% de %total%
@@ -72,6 +73,7 @@ Name: Nome
 name: nome
 Go!: Ok!
 Search: Buscar
+user_profile: Perfil de usuário
 error:
     ops: Oops! %code% %text%
     message: Vamos corrigi-lo o mais rapidamente possível. Desculpe por qualquer inconveniência causada.<br/><a href="%url%">Retornar para a página inicial</a>.

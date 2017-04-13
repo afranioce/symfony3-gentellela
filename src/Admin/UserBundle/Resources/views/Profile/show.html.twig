@@ -1,0 +1,7 @@
+{% extends ":admin:base.html.twig" %}
+
+{% block title %}{{ 'profile.name'|trans }}{% endblock title %}
+
+{% block page_content %}
+{% include "@FOSUser/Profile/show_content.html.twig" %}
+{% endblock page_content %}

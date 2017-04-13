@@ -46,11 +46,16 @@
             $request->get('page', 1)/*page number*/,
             $request->get('limit', 50)/*limit per page*/
         );
+
+        $delete_forms = array_map(function ({{ entity_class }} ${{ entity_singularized }}) {
+            return $this->createDeleteForm(${{ entity_singularized }})->createView();
+        }, ${{ entity_pluralized }}->getItems());
 {% endblock method_body %}
 
 {% block method_return %}
         return $this->render('{{ entity|lower|replace({'\\': '/'}) }}/index.html.twig', array(
             '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+            'delete_forms' => $delete_forms,
         ));
 {% endblock method_return %}
     }

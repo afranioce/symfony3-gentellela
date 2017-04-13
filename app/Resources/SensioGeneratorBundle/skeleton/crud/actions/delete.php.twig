@@ -1,4 +1,5 @@
 
+
     /**
 {% block phpdoc_method_header %}
      * Deletes a {{ entity_singularized }} entity.
@@ -6,7 +7,7 @@
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/{id}", name="{{ route_name_prefix }}_delete")
+     * @Route("/{{ '{' ~ identifier ~ '}' }}", name="{{ route_name_prefix }}_delete")
      * @Method("DELETE")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
@@ -22,7 +23,8 @@
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove(${{ entity_singularized }});
-            $em->flush(${{ entity_singularized }});
+            $em->flush();
+
             $this->get('admin_main.flash')->success('message.success.delete');
         }
 {% endblock method_body %}
@@ -43,7 +45,7 @@
     private function createDeleteForm({{ entity_class }} ${{ entity_singularized }})
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('{{ route_name_prefix }}_delete', array('id' => ${{ entity_singularized }}->getId())))
+            ->setAction($this->generateUrl('{{ route_name_prefix }}_delete', array('{{ identifier }}' => ${{ entity_singularized }}->get{{ identifier|capitalize }}())))
             ->setMethod('DELETE')
             ->getForm()
         ;

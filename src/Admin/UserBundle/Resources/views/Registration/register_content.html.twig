@@ -1,0 +1,26 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register')}) }}
+<h1>Formulário Cadastro</h1>
+
+{{ form_widget(form) }}
+<div>
+    <input type="submit" value="{{ 'registration.submit'|trans }}"/>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="separator">
+    <p class="change_link">Tem cadastro?
+        <a href="{{ url('fos_user_security_login') }}" class="to_register"> Entrar </a>
+    </p>
+
+    <div class="clearfix"></div>
+    <br>
+
+    <div>
+        <h1><i class="fa fa-paw"></i> {{ site_name }}</h1>
+        <p>Copyright ©2017 {{ site_name }}</p>
+    </div>
+</div>
+{{ form_end(form) }}

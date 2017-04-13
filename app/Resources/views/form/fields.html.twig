@@ -1,15 +1,5 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
-{%- block checkbox_widget -%}
-    {%- set attr = attr|merge({'data-checkbox': attribute(attr, 'data-checkbox') is defined ? attribute(attr, 'data-checkbox') : 'icheck'}) -%}
-    {{- parent() -}}
-{%- endblock checkbox_widget -%}
-
-{%- block radio_widget -%}
-    {%- set attr = attr|merge({'data-checkbox': 'icheck'}) -%}
-    {{- parent() -}}
-{%- endblock radio_widget -%}
-
 {%- block choice_widget_collapsed -%}
     {% set attr = attr|merge({'data-select': 'select2', 'data-placeholder': ''}) %}
     {{- parent() -}}

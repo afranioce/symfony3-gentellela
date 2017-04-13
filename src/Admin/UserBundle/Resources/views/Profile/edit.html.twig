@@ -1,0 +1,9 @@
+{% extends ":admin:base.html.twig" %}
+
+{% set page_title = 'profile.edit.title'|trans %}
+
+{% block title %}{{ page_title }}{% endblock title %}
+
+{% block page_content %}
+{% include "@FOSUser/Profile/edit_content.html.twig" %}
+{% endblock page_content %}

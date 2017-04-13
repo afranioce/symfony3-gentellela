@@ -8,4 +8,20 @@
     <div>
         <input class="btn btn-default submit" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
     </div>
+
+    <div class="clearfix"></div>
+
+    <div class="separator">
+        <p class="change_link">Tem cadastro?
+            <a href="{{ url('fos_user_security_login') }}" class="to_register"> Entrar </a>
+        </p>
+
+        <div class="clearfix"></div>
+        <br>
+
+        <div>
+            <h1><i class="fa fa-paw"></i> {{ site_name }}</h1>
+            <p>Copyright ©2017 {{ site_name }}</p>
+        </div>
+    </div>
 </form>
