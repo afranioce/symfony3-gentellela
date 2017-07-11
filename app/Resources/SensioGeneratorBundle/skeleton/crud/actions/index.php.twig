@@ -15,6 +15,7 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $criteria = $request->get('criteria');
