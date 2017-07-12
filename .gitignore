@@ -15,6 +15,7 @@
 /vendor/
 /node_modules/
 /web/assets/
+/web/bundles/
 /web-src/
 /composer.phar
 /composer.lock
