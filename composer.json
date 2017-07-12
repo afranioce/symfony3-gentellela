@@ -1,6 +1,14 @@
 {
-    "name": "afranioce/gentelella",
+    "name": "afranioce/symfony3-gentelella",
     "license": "proprietary",
+    "description": "Symfony using theme Gentelella with CRUD support",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "email": "afranioce@gmail.com",
+            "name": "Afranio Martins"
+        }
+    ],
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -49,7 +57,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "npm run build",
+            "php bin/console doctrine:database:create --no-interaction --if-not-exists",
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ],
         "post-install-cmd": [
             "@symfony-scripts"
@@ -71,7 +82,15 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "database_url": "DATABASE_URL",
+                "monolog_action_level": "LOG_LEVEL",
+                "mailer_host": "MAILER_HOST",
+                "mailer_port": "MAILER_PORT",
+                "mailer_user": "MAILER_USER",
+                "mailer_password": "MAILER_PASSWORD"
+            }
         },
         "branch-alias": null
     }
